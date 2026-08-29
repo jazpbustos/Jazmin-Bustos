@@ -2252,8 +2252,8 @@ footer {
     }
 
     .container { padding: 0 var(--sp-3); }
-    .section { padding: 40px 0; }
-    .section-contact { padding: 40px var(--sp-4); }
+    .section { padding: 30px 0; }
+    .section-contact { padding: 30px var(--sp-4); }
 
     .nav-container { padding: 14px var(--sp-3); }
 }
