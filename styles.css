@@ -1463,7 +1463,7 @@ body.lightbox-open { overflow: hidden; }
     color: var(--pink-strong);
     border-color: var(--pink-strong);
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px color-mix(in srgb, var(--pink-strong) 30%, transparent);
+
 }
 
 .project-link-btn:hover svg { transform: translate(2px, -2px); }
