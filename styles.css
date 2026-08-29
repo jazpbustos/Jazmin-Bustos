@@ -2234,6 +2234,7 @@ footer {
     }
 
     .hero-title { font-size: 2.5rem; }
+    .hero-code { margin-top: 6px; }
     .hero-buttons { flex-wrap: wrap; justify-content: flex-start; gap: 10px; }
     .btn {
         min-height: 40px;
