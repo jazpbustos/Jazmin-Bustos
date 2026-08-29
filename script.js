@@ -296,7 +296,9 @@ document.querySelectorAll('[data-gallery-trigger]').forEach(trigger => {
                 currentGalleryIndex = 0;
                 updateGalleryModal();
                 galleryModal.hidden = false;
-                document.body.style.overflow = 'hidden';
+                galleryModal.classList.add('is-open');
+                document.body.classList.add('lightbox-open');
+                galleryClose.focus();
             }
         }
     });
@@ -315,8 +317,9 @@ galleryClose.addEventListener('click', closeGallery);
 galleryOverlay.addEventListener('click', closeGallery);
 
 function closeGallery() {
+    galleryModal.classList.remove('is-open');
     galleryModal.hidden = true;
-    document.body.style.overflow = '';
+    document.body.classList.remove('lightbox-open');
 }
 
 galleryPrev.addEventListener('click', () => {
