@@ -786,6 +786,42 @@ p { color: var(--text-secondary); }
 
 .particle-dots--lg span { width: 3.5px; height: 3.5px; }
 
+/* ===== TRIO ICON DECORATION =====
+   Decorative icons for trio cards (diploma, rocket, etc) */
+.trio-icon-decoration {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    color: var(--text-secondary);
+    transition: transform 0.3s ease, color 0.3s ease;
+    cursor: default;
+}
+
+.trio-icon-bottom-right {
+    bottom: var(--sp-3);
+    right: var(--sp-3);
+}
+
+.trio-icon-diploma {
+    color: var(--purple);
+}
+
+.trio-icon-diploma:hover {
+    transform: scale(1.2) rotate(-8deg);
+    color: var(--pink-strong);
+}
+
+.trio-icon-rocket {
+    color: var(--orange);
+}
+
+.trio-icon-rocket:hover {
+    transform: scale(1.2) rotate(8deg);
+    color: var(--pink-strong);
+}
+
 @media (hover: none) {
     /* no hover on touch devices — skip the transition-delay stagger */
     .particle-dots span { transition-delay: 0ms; }
@@ -856,8 +892,6 @@ p { color: var(--text-secondary); }
     border-radius: var(--radius);
     overflow: hidden;
 }
-
-.stack-panel .chip-duo { bottom: var(--sp-3); right: var(--sp-3); z-index: 2; }
 
 .stack-col {
     position: relative;
@@ -1526,7 +1560,6 @@ body.lightbox-open { overflow: hidden; }
 .trio-text p:last-child { margin-bottom: 0; }
 
 /* ---- Formación card ---- */
-.trio-card:first-child .trio-corner-chips { bottom: var(--sp-4); right: var(--sp-4); z-index: 2; }
 
 .formacion-list {
     position: relative;
@@ -1596,7 +1629,6 @@ body.lightbox-open { overflow: hidden; }
 }
 
 /* ---- Próximamente card ---- */
-.trio-card-coming .trio-corner-chips { bottom: var(--sp-3); right: var(--sp-3); z-index: 2; }
 
 @media (max-width: 900px) {
     .trio-grid { grid-template-columns: 1fr; }

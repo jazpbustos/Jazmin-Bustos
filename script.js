@@ -270,4 +270,71 @@ if (navbarEl) {
     }, { passive: true });
 }
 
+// ===== GALLERY MODAL =====
+const galleryModal = document.getElementById('galleryModal');
+const galleryImage = document.getElementById('galleryImage');
+const galleryOverlay = document.getElementById('galleryOverlay');
+const galleryClose = document.getElementById('galleryClose');
+const galleryPrev = document.getElementById('galleryPrev');
+const galleryNext = document.getElementById('galleryNext');
+const galleryCounter = document.getElementById('galleryCounter');
+const galleryTotal = document.getElementById('galleryTotal');
+
+let currentGalleryImages = [];
+let currentGalleryIndex = 0;
+
+document.querySelectorAll('[data-gallery-trigger]').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const gallerySource = trigger.closest('.project-preview').parentElement.querySelector('[data-gallery-source]');
+        if (gallerySource) {
+            currentGalleryImages = Array.from(gallerySource.querySelectorAll('img')).map(img => ({
+                src: img.src,
+                alt: img.alt
+            }));
+            if (currentGalleryImages.length > 0) {
+                currentGalleryIndex = 0;
+                updateGalleryModal();
+                galleryModal.hidden = false;
+                document.body.style.overflow = 'hidden';
+            }
+        }
+    });
+});
+
+function updateGalleryModal() {
+    if (currentGalleryImages.length === 0) return;
+    const img = currentGalleryImages[currentGalleryIndex];
+    galleryImage.src = img.src;
+    galleryImage.alt = img.alt;
+    galleryCounter.textContent = currentGalleryIndex + 1;
+    galleryTotal.textContent = currentGalleryImages.length;
+}
+
+galleryClose.addEventListener('click', closeGallery);
+galleryOverlay.addEventListener('click', closeGallery);
+
+function closeGallery() {
+    galleryModal.hidden = true;
+    document.body.style.overflow = '';
+}
+
+galleryPrev.addEventListener('click', () => {
+    currentGalleryIndex = (currentGalleryIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+    updateGalleryModal();
+});
+
+galleryNext.addEventListener('click', () => {
+    currentGalleryIndex = (currentGalleryIndex + 1) % currentGalleryImages.length;
+    updateGalleryModal();
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (galleryModal.hidden) return;
+    if (e.key === 'Escape') closeGallery();
+    if (e.key === 'ArrowLeft') galleryPrev.click();
+    if (e.key === 'ArrowRight') galleryNext.click();
+});
+
 console.log('✦ Portfolio de Jazmín Bustos cargado');
