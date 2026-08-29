@@ -617,6 +617,8 @@ p { color: var(--text-secondary); }
     font-size: 0.82rem;
 }
 
+.btn-label-short { display: none; }
+
 .link-arrow {
     background: none;
     border: none;
@@ -2250,7 +2252,28 @@ footer {
     }
 
     .container { padding: 0 var(--sp-3); }
-    .section { padding: var(--sp-6) 0; }
+    .section { padding: 40px 0; }
+    .section-contact { padding: 40px var(--sp-4); }
 
     .nav-container { padding: 14px var(--sp-3); }
+}
+
+@media (max-width: 480px) {
+    .hero-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        width: 100%;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        min-width: 0;
+        min-height: 38px;
+        padding: 8px 6px;
+        font-size: 0.72rem;
+    }
+
+    .btn-label-full { display: none; }
+    .btn-label-short { display: inline; }
 }
