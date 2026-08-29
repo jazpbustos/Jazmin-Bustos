@@ -56,6 +56,35 @@ navLinks.querySelectorAll('a').forEach(link => {
     });
 });
 
+// ===== ACTIVE NAV SECTION =====
+const sectionNavLinks = Array.from(navLinks.querySelectorAll('a[href^="#"]'))
+    .map(link => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+    .filter(item => item.section);
+
+let navScrollFrame = null;
+function updateActiveNavSection() {
+    const marker = window.scrollY + window.innerHeight * 0.28;
+    let activeItem = sectionNavLinks[0];
+
+    sectionNavLinks.forEach(item => {
+        if (item.section.offsetTop <= marker) activeItem = item;
+    });
+
+    sectionNavLinks.forEach(item => {
+        const isActive = item === activeItem;
+        item.link.classList.toggle('is-active', isActive);
+        if (isActive) item.link.setAttribute('aria-current', 'page');
+        else item.link.removeAttribute('aria-current');
+    });
+    navScrollFrame = null;
+}
+
+window.addEventListener('scroll', () => {
+    if (navScrollFrame !== null) return;
+    navScrollFrame = window.requestAnimationFrame(updateActiveNavSection);
+}, { passive: true });
+updateActiveNavSection();
+
 // ===== SMOOTH SCROLL (nav links + data-scroll-to buttons) =====
 function scrollToId(id) {
     const target = document.getElementById(id);
@@ -238,21 +267,38 @@ if (processTimeline && processLineFill && processDots.length && processStepsData
 }
 
 // ===== SCROLL REVEAL =====
-const revealTargets = document.querySelectorAll(
-    '.section-split, .services-carousel, .process-timeline, .project-card, .statement-box, .coming-box, .contact-content'
-);
-revealTargets.forEach(el => el.classList.add('reveal'));
+const revealGroups = [
+    { selector: '.section-tag', direction: 'left' },
+    { selector: '.about-text, .project-content, .contact-intro', direction: 'left' },
+    { selector: '.interests-card, .project-window, .contact-cards', direction: 'right' },
+    { selector: '.services-carousel, .stack-panel, .process-timeline', direction: 'up' },
+    { selector: '.trio-card', direction: 'up', stagger: true }
+];
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-        }
+const revealTargets = [];
+revealGroups.forEach(({ selector, direction, stagger }) => {
+    document.querySelectorAll(selector).forEach((el, index) => {
+        el.classList.add('reveal');
+        el.dataset.reveal = direction;
+        if (stagger) el.style.setProperty('--reveal-delay', `${index * 90}ms`);
+        revealTargets.push(el);
     });
-}, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+});
 
-revealTargets.forEach(el => observer.observe(el));
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealTargets.forEach(el => el.classList.add('is-visible'));
+} else {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+    revealTargets.forEach(el => observer.observe(el));
+}
 
 // ===== NAVBAR ELEVATION ON SCROLL =====
 // toggles a class instead of writing inline styles every scroll tick —

@@ -239,16 +239,44 @@ p { color: var(--text-secondary); }
 }
 
 .nav-links a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.2s ease;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 999px;
+    transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .nav-links a:hover,
 .nav-links a:focus-visible {
     color: var(--pink-strong);
+}
+
+.nav-links a.is-active {
+    color: var(--pink-strong);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--pink-strong);
+    transform: translateX(-50%);
+    transition: width 0.25s ease;
+}
+
+.nav-links a.is-active::after {
+    width: calc(100% - 20px);
 }
 
 /* Theme toggle: sun + pill switch + moon */
@@ -1064,7 +1092,7 @@ p { color: var(--text-secondary); }
     font-family: var(--font-mono);
     color: var(--text-secondary);
     font-weight: 400;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .tech-icons {
@@ -2123,14 +2151,37 @@ footer {
 /* ===== SCROLL REVEAL ===== */
 .section, .hero { opacity: 1; }
 .reveal {
+    --reveal-x: 0;
+    --reveal-y: 22px;
+    --reveal-delay: 0ms;
     opacity: 0;
-    transform: translateY(16px);
+    transform: translate3d(var(--reveal-x), var(--reveal-y), 0);
+    filter: blur(3px);
+    will-change: transform, opacity;
 }
+
+.reveal[data-reveal="left"] { --reveal-x: -22px; --reveal-y: 0; }
+.reveal[data-reveal="right"] { --reveal-x: 22px; --reveal-y: 0; }
+
 .reveal.is-visible {
-    animation: revealIn 0.6s ease forwards;
+    animation: revealIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay) forwards;
 }
 @keyframes revealIn {
-    to { opacity: 1; transform: translateY(0); }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        filter: blur(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        animation: none;
+    }
 }
 
 /* ===== RESPONSIVE ===== */
