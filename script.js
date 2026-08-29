@@ -70,6 +70,9 @@ function updateActiveNavSection() {
         if (item.section.offsetTop <= marker) activeItem = item;
     });
 
+    const isAtPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
+    if (isAtPageEnd) activeItem = sectionNavLinks[sectionNavLinks.length - 1];
+
     sectionNavLinks.forEach(item => {
         const isActive = item === activeItem;
         item.link.classList.toggle('is-active', isActive);

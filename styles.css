@@ -578,6 +578,7 @@ p { color: var(--text-secondary); }
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    text-decoration: none;
 }
 
 .btn-primary {
@@ -590,7 +591,6 @@ p { color: var(--text-secondary); }
 .btn-primary:hover {
     background-position: 100% 50%;
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px color-mix(in srgb, var(--pink-strong) 35%, transparent);
 }
 
 .btn-secondary {
@@ -1457,9 +1457,9 @@ body.lightbox-open { overflow: hidden; }
 .project-link-btn svg { transition: transform 0.2s ease; }
 
 .project-link-btn:hover {
-    background: var(--purple);
-    color: #fff;
-    border-color: var(--purple);
+    background: transparent;
+    color: var(--pink-strong);
+    border-color: var(--pink-strong);
     transform: translateY(-2px);
     box-shadow: 0 10px 24px color-mix(in srgb, var(--pink-strong) 30%, transparent);
 }
